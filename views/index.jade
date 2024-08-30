@@ -1,0 +1,73 @@
+extends layout
+
+block ws_client
+  script.
+          // JavaScript for WebSocket client
+          document.addEventListener('DOMContentLoaded', function() {
+            const socket = new WebSocket('ws://localhost:8081');
+
+            socket.onopen = function(event) {
+              console.log('Connected to WebSocket server');
+            };
+
+            socket.onmessage = function(event) {
+              console.log('Message from server:', event.data);
+              // Display message to the user
+              const messageElement = document.createElement('p');
+              
+              renderMessage(messageElement, event.data);
+              messageElement.classList.add('zoom-in', 'card');        
+              document.body.appendChild(messageElement);
+            };
+
+            socket.onclose = function(event) {
+              console.log('WebSocket connection closed');
+            };
+
+            socket.onerror = function(error) {
+              console.error('WebSocket error:', error);
+            };
+          });
+
+          function renderMessage(parent, rawData) {
+            data = JSON.parse(rawData);
+            if (data.operator_sid == "LY955ba49ceea24f74845e26537b66801b") {
+              // Sentiment
+              const title = document.createElement('h3');
+              title.classList.add('warning');
+              title.textContent = "⚠️ Bad sentiment (" + data.operator_result + ") detected on call";
+              const warningSign = document.createElement('span');
+              parent.appendChild(title);              
+              const detail = document.createElement('p');
+              detail.textContent = data.sentence;
+              detail.classList.add('code-like');
+              parent.appendChild(detail);
+            } else if (data.operator_sid == "LY014e38053fca4537a683c32a6ddb6e32" && data.operator_result == true) {
+              // Scalation request
+              const title = document.createElement('h3');
+              title.classList.add('warning');
+              title.textContent = "⚠️ Scalation request detected on call";
+              parent.appendChild(title);              
+              const detail = document.createElement('p');
+              detail.textContent = data.sentence;
+              detail.classList.add('code-like');
+              parent.appendChild(detail);
+              // Extra info
+              if (data.additional_operator_results && data.additional_operator_results.length > 0) {
+                const summaryTitle = document.createElement('h4');
+                summaryTitle.textContent = "Summary:"
+                parent.appendChild(summaryTitle);
+                const summary = document.createElement('p');
+                summary.textContent = data.additional_operator_results[0].operator_result;
+                summary.classList.add('code-like');
+                parent.appendChild(summary);
+
+
+              }    
+            } else {
+              parent.textContent = rawData;
+            }
+          }
+
+block content
+  h1= title

@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    style.
+      /* CSS for the zoom-in animation */
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .zoom-in {
+        animation: zoomIn 0.5s ease forwards;
+      }
+
+      p {
+        margin: 0.5em 0;
+      }
+
+      .warning {
+        color: orange;
+      }
+
+       /* CSS for Material Design-style cards */
+      .card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        margin: 16px 0;
+        transition: box-shadow 0.3s ease;
+        color: #333333;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .code-like {
+        background-color: #f4f4f4;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+        padding: 8px;
+        margin: 16px 0;
+        font-family: 'Courier New', Courier, monospace;
+        color: #d14;
+      }
+
+    block ws_client
+  body
+    block content
