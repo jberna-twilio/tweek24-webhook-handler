@@ -35,7 +35,7 @@ block ws_client
               // Sentiment
               const title = document.createElement('h3');
               title.classList.add('warning');
-              title.textContent = "⚠️ Bad sentiment (" + data.operator_result + ") detected on call";
+              title.textContent = "⚠️ Negative Sentiment detected";
               const warningSign = document.createElement('span');
               parent.appendChild(title);              
               const detail = document.createElement('p');
@@ -46,7 +46,7 @@ block ws_client
               // Scalation request
               const title = document.createElement('h3');
               title.classList.add('warning');
-              title.textContent = "⚠️ Scalation request detected on call";
+              title.textContent = "⚠️ Escalation request detected";
               parent.appendChild(title);              
               const detail = document.createElement('p');
               detail.textContent = data.sentence;
