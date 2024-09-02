@@ -62,7 +62,10 @@ block ws_client
                 summary.classList.add('code-like');
                 parent.appendChild(summary);
               }    
-            } else if (data.operator == "deepfake_detection" && data.operator_result.label == "fake") {
+            } else if (data.operator == "deepfake_detection") {
+              if (data.operator_result.label != "fake") {
+                return;
+              }
               if (alreadyShownFakeDetector) {
                 return;
               }
@@ -71,8 +74,7 @@ block ws_client
               const title = document.createElement('h3');
               title.classList.add('warning');
               title.textContent = "⚠️ Deep Fake Voice detected";
-              parent.appendChild(title);
-              
+              parent.appendChild(title);              
             } else {
               parent.textContent = rawData;
             }
